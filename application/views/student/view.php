@@ -161,6 +161,7 @@
 								
 									<th>School Year</th>
 									<th>Grade and Section</th>
+									<th>Class Adviser</th>
 									<th>Date Enrolled</th>
 									<th>Status</th>
 									<th>Actions</th>
@@ -172,10 +173,17 @@
 									<tr>
 										<td><?php echo $enrollment_rec['school_year']; ?></td>
 										<td><?php echo $enrollment_rec['name']; ?></td>
+										<td>
+											<?php
+											if(isset($this->enrollment_library->get_faculty_name_by_id($enrollment_rec['adviser'])->first_name)){
+											 echo $this->enrollment_library->get_faculty_name_by_id($enrollment_rec['adviser'])->first_name.' '.$this->enrollment_library->get_faculty_name_by_id($enrollment_rec['adviser'])->last_name; 
+											}
+										 ?>
+										</td>
 										<td><?php echo $enrollment_rec['date']; ?></td>
 										<td><?php echo $enrollment_rec['status'] == '1' ? '<label class="label label-success">Enrolled</label>' : '<label class="label label-danger">Dropped</label>'; ?></td>
 										<td>
-											<a class="btn btn-primary">View Grades</a>
+											<a class="btn btn-primary" href="<?php echo base_url('student/grade'); ?>/<?php echo $enrollment_rec['adviser']?>/1/<?php echo $student['id']; ?>"><i class="fa fa-calculator"></i> View Grades</a>
 											<?php
 											$school_year_parts = explode('-',$enrollment_rec['school_year']);
 											if($school_year_parts[0]==date('Y')){
@@ -184,7 +192,7 @@
 
 													if(count($enrollment_status_current)!==0){
 														if($enrollment_status_current[0]->status==='1'){
-															echo '<a class="btn btn-danger">Drop School Year</a>';
+															
 														}
 													 }
 											}
@@ -280,6 +288,8 @@
 		$(document).on('click','.dropstudent-btn',function(){
 			var student_id = <?php echo (int) $student['id']; ?>;
 				bootbox.confirm('Are you sure you want to drop this student?',function(t){
+
+					if(t===true){
 						$.ajax({
 							url: "<?php echo base_url('ajax/drop_student');?>",
 							type: 'POST',
@@ -294,6 +304,7 @@
 
 							}
 						})
+					}
 				});
 		});
 	</script>

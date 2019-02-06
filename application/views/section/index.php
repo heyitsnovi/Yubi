@@ -31,8 +31,8 @@
 								    <tr>
 										<th>ID</th>
 										<th>Level</th>
-										<th>Adviser</th>
 										<th>Name</th>
+										<th>Adviser</th>
 										<th>Actions</th>
 								    </tr>
 									</thead>
@@ -40,11 +40,18 @@
 									<?php foreach($sections as $s){ ?>
 								    <tr>
 										<td><?php echo $s['id']; ?></td>
-										<td><?php echo $s['level']; ?></td>
-										<td><?php echo $s['adviser']; ?></td>
+										<td><?php echo $this->enrollment_library->get_level_info_by_id($s['level'],'name'); ?></td>
 										<td><?php echo $s['name']; ?></td>
+										<td><?php
+											if(isset($this->enrollment_library->get_faculty_name_by_id($s['adviser'])->first_name)){
+											 echo $this->enrollment_library->get_faculty_name_by_id($s['adviser'])->first_name.' '.$this->enrollment_library->get_faculty_name_by_id($s['adviser'])->last_name; 
+											}else{
+												echo '<label class="label label-warning">[ Vacant - Please select adviser ]</label>';
+											}
+										 ?></td>
+										
 										<td>
-								            <a href="<?php echo site_url('section/edit/'.$s['id']); ?>" class="btn btn-info btn-xs">Edit</a> 
+								            <a href="<?php echo site_url('section/edit/'.$s['id']); ?>" class="btn btn-info btn-md">Edit</a> 
 								        </td>
 								    </tr>
 									<?php } ?>

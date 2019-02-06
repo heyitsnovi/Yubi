@@ -57,7 +57,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="adviser" class="col-md-1 control-label"><span class="text-danger">*</span>Adviser</label>
+								<label for="adviser" class="col-md-1 control-label">Adviser</label>
 								<div class="col-md-8">
 									<select name="adviser" class="form-control">
 										<option value="">select</option>

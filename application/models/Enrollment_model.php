@@ -27,7 +27,7 @@ class Enrollment_model extends CI_Model {
 
 		return  $this->db
 				->where('student_id',$student_id)
-				->where('school_year',$school_year.'-'.date('Y',strtotime($school_year.' +1 year')))->get('enrollment')->result();
+				->where('school_year',$school_year)->get('enrollment')->result();
 	}
 
 	public function drop_student($student_id,$school_year){
@@ -52,6 +52,10 @@ class Enrollment_model extends CI_Model {
 		return $this->db->get('rooms')->result();
 	}
 
+	public function get_active_schoolyear(){
+		$status = 1;
+		return $this->db->where('schoolyear_status',$status)->get('school_year')->row()->schoolyear_value;
+	}
 }
 
 /* End of file Enrollment_model.php */

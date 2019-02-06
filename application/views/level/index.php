@@ -42,7 +42,7 @@
 										<td><?php echo $l['name']; ?></td>
 										<td><?php echo $l['description']; ?></td>
 										<td>
-								            <a href="<?php echo site_url('level/edit/'.$l['levels_id']); ?>" class="btn btn-info btn-xs">Edit</a> 
+								            <a href="<?php echo site_url('level/edit/'.$l['levels_id']); ?>" class="btn btn-info btn-md">Edit</a> 
 								            
 								        </td>
 								    </tr>

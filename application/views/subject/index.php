@@ -43,7 +43,7 @@
 											<td><?php echo $s['name']; ?></td>
 											<td><?php echo $s['description']; ?></td>
 											<td>
-									            <a href="<?php echo site_url('subject/edit/'.$s['id']); ?>" class="btn btn-info btn-xs">Edit</a> 
+									            <a href="<?php echo site_url('subject/edit/'.$s['id']); ?>" class="btn btn-info btn-md">Edit</a> 
 									        </td>
 									    </tr>
 										<?php } ?>

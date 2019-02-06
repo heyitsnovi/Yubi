@@ -4,14 +4,14 @@
 				<li><a href="#">
 					<em class="fa fa-home"></em> Dashboard
 				</a></li>
-				<li class="">Faculty</li>
-				<li class="active">Faculty Subject</li>
+				<li class="">Grading Sheet</li>
+				<li class="active">Add Subject Grades</li>
 			</ol>
 		</div><!--/.row-->
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Faculty Subject</h1>
+				<h1 class="page-header">Add  Subject Grades</h1>
 			</div>
 		</div><!--/.row-->
 				
@@ -23,7 +23,7 @@
 					<div class="panel-body">
 						<div class="table-responsive">
 						<div>
-							<a class="btn btn-success  btn-lg btn-add-facultysubj">Load Subjects</a> 
+							
 						</div>
 						<br>
 						<input type="hidden" name="_faculty_id" value="<?php echo $faculty_id; ?>">
@@ -51,7 +51,7 @@
 						    				<td><?php echo $load['day']; ?></td>
 						    				<td><?php echo $load['time']; ?></td>
 						    				<td>
-						    					<a href="" class="btn btn-danger">Remove</a>
+						    					<a href="<?php echo base_url('grades/subject_code'); ?>/<?php echo $load['teacher'];?>/<?php echo $load['subject'];?>" class="btn btn-success"><i class="fa fa-plus"></i> Add Grades</a>
 						    				</td>
 						    			</tr>
 						    	<?php endforeach; ?>
@@ -65,23 +65,5 @@
 	</div><!-- /.panel-->
 	<script>
 		$('.table-faculty-load').DataTable();
-		$(document).on('click','.btn-add-facultysubj',function(){
-			$.ajax({
-				url: '<?php echo base_url('ajax/show_add_teachersubject_modal');?>',
-				type: 'POST',
-				data:{
-					faculty_id : $("input[name='_faculty_id']").val()
-				},
-				success:function(response){
-					var box = bootbox.dialog({
-						title: ' Add Subject To Teacher',
-						size: 'large',
-						message: '  ',
-
-					});
-					box.contents().find('.bootbox-body').html(response);
-				}
-			})
-		});
 	</script>
 		

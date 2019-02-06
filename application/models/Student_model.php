@@ -95,4 +95,17 @@ class Student_model extends CI_Model
             return $this->db->get('sections')->result_array();
         }
     }
+    function get_student_fullname($student_id){
+        return $this->db->where('id',$student_id)->get('students')->row();
+    }
+
+    function get_student_grade($student_id,$teacher_id,$school_year){
+
+        return $this->db->join('grades', 'grades.subject_id = schedules.subject')
+                        ->where('schedules.teacher',$teacher_id)
+                        ->where('grades.schoolyear_id',$school_year)
+                        ->where('grades.student_id',$student_id)
+                        ->get('schedules')
+                        ->result();
+    }
 }

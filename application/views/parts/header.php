@@ -111,6 +111,7 @@
 			<li><a href=""><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li><a href="<?php echo base_url('student');?>"><em class="fa fa-users">&nbsp;</em> Students</a></li>
 			<li><a href="<?php echo base_url('faculty');?>"><em class="fa fa-id-card">&nbsp;</em> Faculty /Staffs </a></li>
+			
 			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-cog">&nbsp;</em> Data Maintenance <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -124,6 +125,17 @@
 					<li><a class="" href="<?php echo base_url('section'); ?>">
 						<span class="fa fa-arrow-right">&nbsp;</span> Sections
 					</a></li>
+				</ul>
+			</li>
+
+			<li class="parent "><a data-toggle="collapse" href="#sub-item-2">
+				<em class="fa fa-list-alt">&nbsp;</em> Grading Sheet<span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-2">
+					<li><a href="<?php echo base_url('grades');?>" >
+						<span class="fa fa-arrow-right">&nbsp;</span> Submit Grades
+					</a></li>
+				
 				</ul>
 			</li>
 			<li><a href=""><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>

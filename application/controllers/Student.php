@@ -20,6 +20,7 @@ class Student extends CI_Controller{
      */
     function index()
     {
+
         $params['limit'] = RECORDS_PER_PAGE; 
         $params['offset'] = ($this->input->get('per_page')) ? $this->input->get('per_page') : 0;
 
@@ -185,7 +186,7 @@ class Student extends CI_Controller{
     {
         
 
-        $data['enrollment_status_current'] = $this->enrollment_library->is_student_enrolled(date('Y'),$id);
+        $data['enrollment_status_current'] = $this->enrollment_library->is_student_enrolled($this->Enrollment_model->get_active_schoolyear(),$id);
         $data['student'] =   $this->Student_model->get_student($id);
         $data['guardian'] =  $this->Student_model->get_guardian($id);
         $data['page_title'] = 'Viewing Student Info';
@@ -210,4 +211,12 @@ class Student extends CI_Controller{
         $this->load->view('student/enroll-ajax-dialog',$data);
     }
     
+    function grade($adviser_id,$school_year,$student_id){
+
+        $data['student_grade'] = $this->Student_model->get_student_grade($student_id,$adviser_id,$school_year);
+        $data['page_title'] = 'Viewing Student Grades';
+        $data['_view'] = 'student/grades';
+        $this->load->view('layouts/main',$data);
+
+    }
 }

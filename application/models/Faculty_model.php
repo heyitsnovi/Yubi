@@ -82,5 +82,41 @@ class Faculty_model extends CI_Model
         return $this->db->insert('schedules',$data);
     }
 
+    function get_faculty_name_by_id($faculty_id){
 
+        if(isset($this->db->where('id',$faculty_id)->get('faculty')->row()->first_name)){
+            return $this->db->where('id',$faculty_id)->get('faculty')->row();
+        }else{
+            return '';
+        }
+    }
+
+    function get_student_by_section_id($section_id){
+        return $this->db->where('section',$section_id)->get('enrollment')->result();
+    }
+
+    function get_advisory_section_by_teacher($teacher_id){
+
+        return $this->db->where('adviser',$teacher_id)->get('sections')->row()->id;
+    }
+
+    function submit_grades($data){
+
+        return $this->db->insert('grades',$data);
+    }
+
+    function update_grades($student_id,$subject_id,$new_data){
+
+        $sql= $this->db->where('student_id',$student_id)->where('subject_id',$subject_id)->update('grades',$new_data);
+
+    }
+
+    function has_grade_record($student_id,$subject_id){
+
+        return $this->db->where('student_id',$student_id)->where('subject_id',$subject_id)->from('grades')->count_all_results();
+    }
+
+    function get_grades($subject_id){
+        return $this->db->where('subject_id',$subject_id)->get('grades')->result();
+    }   
 }

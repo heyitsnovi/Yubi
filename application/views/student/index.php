@@ -22,7 +22,7 @@
 					<div class="panel-body">
 						<div class="table-responsive">
 							<div>
-								<a href="<?php echo site_url('student/add'); ?>" class="btn btn-success btn-lg">Add Student</a> 
+								<a href="<?php echo site_url('student/add'); ?>" class="btn btn-success btn-lg"><i class="fa fa-user-plus"></i> New Student</a> 
 							</div>
 							<br>
 								<table class="table table-striped table-bordered table-student-list">
@@ -53,9 +53,9 @@
 										<td><?php echo $s['email']; ?></td>
 										<td><?php echo $s['address']; ?></td>
 										<td>
-								            <a title="Edit Student Info " href="<?php echo site_url('student/edit/'.$s['id']); ?>" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> Edit Info</a> 
+								            <a title="Edit Student Info " href="<?php echo site_url('student/edit/'.$s['id']); ?>" class="btn btn-md btn-success"><i class="fa fa-pencil"></i> Edit Info</a> 
 								            
-								            <a title="View Student Info " href="<?php echo site_url('student/view/'.$s['id']); ?>" class="btn-sm btn btn-primary" ><i  class="fa fa-search"></i> View  Info</a> 
+								            <a title="View Student Info " href="<?php echo site_url('student/view/'.$s['id']); ?>" class="btn-md btn btn-primary" ><i  class="fa fa-search"></i> View  Info</a> 
 								            
 								        </td>
 								    </tr>

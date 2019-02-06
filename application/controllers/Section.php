@@ -11,6 +11,7 @@ class Section extends CI_Controller{
         $this->load->model('Section_model');
         $this->load->model('Level_model');
         $this->load->model('Faculty_model');
+        $this->load->library('enrollment_library');
     } 
 
     /*
@@ -35,7 +36,7 @@ class Section extends CI_Controller{
         $data['vacant_teachers'] = $this->Section_model->get_vacant_teachers();
 		$this->form_validation->set_rules('name','Name','required|max_length[100]');
 		$this->form_validation->set_rules('level','Level','required|integer');
-		$this->form_validation->set_rules('adviser','Adviser','required|integer');
+		
 		
 		if($this->form_validation->run())     
         {   

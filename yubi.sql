@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2019 at 02:18 PM
+-- Generation Time: Feb 05, 2019 at 01:47 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -38,14 +38,6 @@ CREATE TABLE `enrollment` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `enrollment`
---
-
-INSERT INTO `enrollment` (`enrollment_id`, `student_id`, `levels_id`, `section`, `school_year`, `status`, `date`) VALUES
-(1, 8, 14, 3, '2019-2020', '1', '2019-02-02'),
-(2, 1, 2, 2, '2019-2020', '1', '2019-02-02');
-
 -- --------------------------------------------------------
 
 --
@@ -68,16 +60,22 @@ CREATE TABLE `faculty` (
   `profile` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `faculty`
+-- Table structure for table `grades`
 --
 
-INSERT INTO `faculty` (`id`, `first_name`, `middle_name`, `last_name`, `birthdate`, `address`, `civil_status`, `citizenship`, `gender`, `email`, `contact`, `role`, `profile`) VALUES
-(1, 'Al Jared', 'Cuarteros', 'Laniba', '2003-01-31', 'Pagina, Jagna, Bohol', 'Single', 'Filipino', 'Male', 'jaredlaniba@gmail.com', '09106447828', 'Teacher', NULL),
-(2, 'Maria Andrea', 'Laniba', 'Salamanes', '1996-07-21', 'Pagina, Jagna, Bohol', 'Married', 'Filipino', 'Female', 'andrealaniba@gmail.com', '09101651601', 'Teacher', NULL),
-(3, 'Hanna Mae', 'Mijares', 'Cuaresma', '1999-11-12', 'Napo', 'Single', 'Filipino', 'Female', 'nam@mail.com', '123456', 'Teacher', NULL),
-(4, 'Hatake', 'Rou', 'Kakashi', '1992-05-12', 'Konoha Japan', 'Single', 'Japanese', 'Male', 'hatake.kakashi@mail.com', '1231202913012', 'Teacher', NULL),
-(5, 'Saitama', 'Suze', 'Sensei', '1992-01-03', 'Loon Bohol', 'Single', 'Japanese', 'Male', 'saitama@mail.com', '100-2132', 'Teacher', NULL);
+CREATE TABLE `grades` (
+  `grade_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  `schoolyear_id` int(11) NOT NULL,
+  `first_grading` double DEFAULT NULL,
+  `second_grading` double DEFAULT NULL,
+  `third_grading` double DEFAULT NULL,
+  `fourth_grading` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -121,18 +119,6 @@ CREATE TABLE `guardian` (
   `g_address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `guardian`
---
-
-INSERT INTO `guardian` (`id`, `student_id`, `father`, `father_occupation`, `mother`, `mother_occupation`, `guardian`, `guardian_contact`, `g_address`) VALUES
-(1, 1, 'Peter Pan', 'Programmer', 'Sheila Bread', 'Programmer', 'Nobody There', '123123', 'Loon Bohol'),
-(2, 2, 'asdasasd', 'asdasdasd', 'asdasd', 'asdasd', 'assdasd', '123123', 'asdasdasd'),
-(3, 4, 'Toshi Himada', 'Web Developer', 'Mai Himada', 'Nurse', 'Toshi Himada', '09191234567', 'Loon Bohol'),
-(4, 7, 'Test Data', 'Doctor', 'Name of mother', 'Nurse', 'Chi Chi', '123002312', 'Loon Bohol'),
-(5, 8, 'Doe Peter', 'Mechanic', 'Jane Peter', 'Doctor', 'Doe Peter', '123412312', 'Loon Bohol'),
-(6, 9, 'Johnny Smith', 'Programmer', 'Jane Smith', 'Nurse', 'Jane Smith', '09191234567', 'California USA');
-
 -- --------------------------------------------------------
 
 --
@@ -152,7 +138,7 @@ CREATE TABLE `levels` (
 INSERT INTO `levels` (`levels_id`, `name`, `description`) VALUES
 (1, 'Pre-School', 'Preschool Level'),
 (2, 'Kindergarten', 'Kinder Garten Level Baby'),
-(3, 'Grade 1', ''),
+(3, 'Grade 1', 'Grade I Pupil'),
 (4, 'Grade 2', ''),
 (5, 'Grade 3', ''),
 (6, 'Grade 4', ''),
@@ -192,17 +178,6 @@ CREATE TABLE `rooms` (
   `incharge` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `rooms`
---
-
-INSERT INTO `rooms` (`id`, `name`, `incharge`) VALUES
-(1, 'St. Joseph', 0),
-(2, 'St. Patrick', 2),
-(3, 'St. Fatima', 1),
-(4, 'St. Veronica', 0),
-(5, 'St. Gregory', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -221,16 +196,24 @@ CREATE TABLE `schedules` (
   `schoolyear` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `schedules`
+-- Table structure for table `school_year`
 --
 
-INSERT INTO `schedules` (`id`, `teacher`, `subject`, `room`, `level`, `section`, `day`, `time`, `schoolyear`) VALUES
-(1, 4, 1, 1, 1, 1, 'Monday,Wednesday,Friday', '7:00-8:00', '2019-2020'),
-(2, 4, 2, 2, 1, 1, 'Tuesday', '8:00-9:00', '2019-2020'),
-(3, 4, 8, 3, 16, 3, 'Tuesday,Wednesday', '10:00-11:00', '2019-2020'),
-(4, 4, 7, 2, 15, 3, 'Monday,Tuesday', '4:00-5:00', '2019-2020'),
-(5, 4, 9, 3, 16, 3, 'Monday,Wednesday,Friday', '12:00-1:00', '2019-2020');
+CREATE TABLE `school_year` (
+  `schoolyear_id` int(11) NOT NULL,
+  `schoolyear_status` int(11) NOT NULL,
+  `schoolyear_value` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `school_year`
+--
+
+INSERT INTO `school_year` (`schoolyear_id`, `schoolyear_status`, `schoolyear_value`) VALUES
+(1, 1, '2019-2020');
 
 -- --------------------------------------------------------
 
@@ -242,20 +225,8 @@ CREATE TABLE `sections` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `level` int(11) NOT NULL,
-  `adviser` int(11) NOT NULL
+  `adviser` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `sections`
---
-
-INSERT INTO `sections` (`id`, `name`, `level`, `adviser`) VALUES
-(1, 'PSchool A', 1, 1),
-(2, 'Kinder A', 2, 1),
-(3, 'G12 - STEM A', 14, 2),
-(4, 'G3 - Gumamela', 5, 3),
-(5, 'G3 - Ilang-Ilang', 5, 4),
-(6, 'G3-Santan', 5, 5);
 
 -- --------------------------------------------------------
 
@@ -280,20 +251,6 @@ CREATE TABLE `students` (
   `profile` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `students`
---
-
-INSERT INTO `students` (`id`, `first_name`, `middle_name`, `last_name`, `gender`, `birthdate`, `birthplace`, `citizenship`, `religion`, `contact`, `email`, `password`, `address`, `profile`) VALUES
-(1, 'Queen', 'Off', 'Harts', 'Male', '2018-08-02', 'Loon Bohol', 'Filipino', 'Christian', '123123213', 'qwe@asd.com', '$2y$10$WMhlqo9lRm.CHNV8Ze.pbu9YFv2HgViS51RFYDQNKxMTWVHauEpxK', 'Napo Loon Bohol', ''),
-(2, 'Hanna Mae', 'Mijares', 'Cuaresma', 'Female', '2018-09-06', 'asdasdlasjd', 'asdasd', 'asdasd', '123123', 'h@gmail.com', '$2y$10$2kWCUuvpRaaMHNImfjhL9eCUYV26SDCvNcEIXW.CH9AVS68Q03uPW', 'asldjalsdjk', ''),
-(3, 'Hero', 'Yuki', 'Himada', 'Male', '1998-05-13', 'Japan', 'Japanese', 'Catholic', '123191', 'hirohimada@mail.com', '', 'Loon Bohol', ''),
-(4, 'Johnny', 'Doe', 'Smith', 'Male', '2001-01-03', 'Loon Bohol', 'Filipino', 'Catholic', '123456', 'hosico@amail.club', '123123', 'Loon Bohol', ''),
-(5, 'Ant', 'Man', 'Do', 'Male', '2001-01-21', 'Loon Bohol', 'Filipino', 'Islam', '12345670-123', 'testmailer@mail.com', 'password', 'Loon Bohol', ''),
-(7, 'Killer', 'Man', 'Do', 'Male', '2001-01-21', 'Loon Bohol', 'Filipino', 'Islam', '12345670-123', 'testmailer@mail.com', 'password', 'Loon Bohol', ''),
-(8, 'Peter', 'Doe', 'Wills', 'Male', '1992-01-31', 'Loon Bohol', 'American', 'Christian', '1234401221', 'peterdoe@mail.com', '12345678', 'Tagbilaran Bohol', ''),
-(9, 'Mark', 'Fish', 'Zuckerberg', 'Male', '1985-05-14', 'Palo Alto California', 'American', 'Christian', '0019213112321', 'mark@fb.com', '123123', 'Palo Alto California', '');
-
 -- --------------------------------------------------------
 
 --
@@ -306,21 +263,6 @@ CREATE TABLE `subjects` (
   `name` varchar(100) NOT NULL,
   `description` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `subjects`
---
-
-INSERT INTO `subjects` (`id`, `code`, `name`, `description`) VALUES
-(1, '123456', 'Math 1', 'Mental Abuse To Humans'),
-(2, '1323', 'English 1', 'English for Dummies'),
-(3, '4232', 'Science 1', 'Science for Grade School'),
-(4, '771281', 'MAPEH', 'Music Art PE Health'),
-(5, '3942893', 'Values Education', 'Subject about values in life'),
-(6, '23321901', 'Araling Panlipunan', 'AP for highschool'),
-(7, '3819821', 'Biology Science', 'biology science'),
-(8, '3819891', 'TLE', 'Technology Livelihood Education'),
-(9, '0219110', 'Geometry', 'Geometry Senior High');
 
 -- --------------------------------------------------------
 
@@ -397,6 +339,12 @@ ALTER TABLE `faculty`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `grades`
+--
+ALTER TABLE `grades`
+  ADD PRIMARY KEY (`grade_id`);
+
+--
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
@@ -438,6 +386,12 @@ ALTER TABLE `schedules`
   ADD KEY `room` (`room`),
   ADD KEY `section` (`section`),
   ADD KEY `level` (`level`);
+
+--
+-- Indexes for table `school_year`
+--
+ALTER TABLE `school_year`
+  ADD PRIMARY KEY (`schoolyear_id`);
 
 --
 -- Indexes for table `sections`
@@ -482,13 +436,19 @@ ALTER TABLE `users_groups`
 -- AUTO_INCREMENT for table `enrollment`
 --
 ALTER TABLE `enrollment`
-  MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `grades`
+--
+ALTER TABLE `grades`
+  MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `groups`
@@ -500,7 +460,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `guardian`
 --
 ALTER TABLE `guardian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `levels`
@@ -518,31 +478,37 @@ ALTER TABLE `login_attempts`
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `school_year`
+--
+ALTER TABLE `school_year`
+  MODIFY `schoolyear_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
