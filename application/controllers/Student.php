@@ -13,6 +13,11 @@ class Student extends CI_Controller{
         $this->load->model(['Student_model','Enrollment_model']);
         $this->load->helper(['url']);
         $this->load->library(['pagination','form_validation','ion_auth','enrollment_library']);
+
+        if (!$this->ion_auth->in_group(['admin', 'registrar']))
+        {
+            redirect('auth/login', 'refresh');
+        }
     } 
 
     /*
@@ -79,7 +84,21 @@ class Student extends CI_Controller{
             );
             
 
-            $student_id = $this->Student_model->add_student($params);
+                $student_id = $this->Student_model->add_student($params);
+
+                $username = $this->input->post('email');
+                $password = $this->input->post('password');
+                $email = $this->input->post('email');
+                $additional_data = array(
+                           'first_name' => $this->input->post('first_name'),
+                            'last_name' => $this->input->post('last_name'),
+                            'phone'=>$this->input->post('contact'),
+                            'company'=>'UBLI',
+                            'active'=>0
+                            );
+                $group = array('3'); // Sets user to student
+
+                 $this->ion_auth->register($username, $password, $email, $additional_data, $group);
 
             $guardian_info  = [
                 'student_id'=>$student_id,

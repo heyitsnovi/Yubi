@@ -119,4 +119,8 @@ class Faculty_model extends CI_Model
     function get_grades($subject_id){
         return $this->db->where('subject_id',$subject_id)->get('grades')->result();
     }   
+
+    function get_faculty_id_by_email($faculty_email){
+        return $this->db->where('email',$faculty_email)->get('faculty')->row()->id;
+    }
 }

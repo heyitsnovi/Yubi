@@ -47,7 +47,11 @@ class Auth extends CI_Controller
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 
-			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'index', $this->data);
+			//$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'index', $this->data);
+
+			        $this->data['_view'] = 'auth/index';
+			        $this->data['page_title'] = 'Site Users';
+        			$this->load->view('layouts/main',$this->data);
 		}
 	}
 
@@ -73,7 +77,17 @@ class Auth extends CI_Controller
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('/', 'refresh');
+
+				if($this->ion_auth->in_group(['registrar','admin'])){
+
+					redirect('/student', 'refresh');	
+
+				}else if($this->ion_auth->in_group(['cashier'])){
+					redirect('/payment','refresh');
+				}
+				else if($this->ion_auth->in_group(['teacher'])){
+					redirect('/teacher/subjects','refresh');
+				}
 			}
 			else
 			{
@@ -101,6 +115,11 @@ class Auth extends CI_Controller
 
 			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'login', $this->data);
 		}
+
+		 if ($this->ion_auth->in_group(['admin', 'registrar']))
+        {
+            redirect('student', 'refresh');
+        }
 	}
 
 	/**
@@ -378,7 +397,7 @@ class Auth extends CI_Controller
 		{
 			// redirect them to the auth page
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth", 'refresh');
+			redirect('user/list', 'refresh');
 		}
 		else
 		{
@@ -434,7 +453,7 @@ class Auth extends CI_Controller
 			}
 
 			// redirect them back to the auth page
-			redirect('auth', 'refresh');
+			redirect('user/list', 'refresh');
 		}
 	}
 
@@ -445,18 +464,22 @@ class Auth extends CI_Controller
 	{
 		$this->data['title'] = $this->lang->line('create_user_heading');
 
+
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
-			redirect('auth', 'refresh');
+			redirect('user/list', 'refresh');
 		}
 
 		$tables = $this->config->item('tables', 'ion_auth');
 		$identity_column = $this->config->item('identity', 'ion_auth');
 		$this->data['identity_column'] = $identity_column;
+		$this->data['user_groups'] = $this->ion_auth->groups()->result_array();
 
 		// validate form input
+
 		$this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'trim|required');
 		$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'trim|required');
+
 		if ($identity_column !== 'email')
 		{
 			$this->form_validation->set_rules('identity', $this->lang->line('create_user_validation_identity_label'), 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']');
@@ -471,6 +494,8 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
+
+
 		if ($this->form_validation->run() === TRUE)
 		{
 			$email = strtolower($this->input->post('email'));
@@ -484,12 +509,13 @@ class Auth extends CI_Controller
 				'phone' => $this->input->post('phone'),
 			);
 		}
-		if ($this->form_validation->run() === TRUE && $this->ion_auth->register($identity, $password, $email, $additional_data))
+		if ($this->form_validation->run() === TRUE && $this->ion_auth->register($identity, $password, $email, $additional_data,[$this->input->post('groups')]))
 		{
 			// check to see if we are creating the user
 			// redirect them back to the admin page
+
 			$this->session->set_flashdata('message', $this->ion_auth->messages());
-			redirect("auth", 'refresh');
+			redirect("user/list", 'refresh');
 		}
 		else
 		{
@@ -546,7 +572,10 @@ class Auth extends CI_Controller
 				'value' => $this->form_validation->set_value('password_confirm'),
 			);
 
-			$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'create_user', $this->data);
+			//$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'create_user', $this->data);
+			$this->data['_view'] = 'auth/create_user';
+	        $this->data['page_title'] = 'New User';
+			$this->load->view('layouts/main',$this->data);
 		}
 	}
 	/**
@@ -554,7 +583,7 @@ class Auth extends CI_Controller
 	*/
 	public function redirectUser(){
 		if ($this->ion_auth->is_admin()){
-			redirect('auth', 'refresh');
+			redirect('user/list', 'refresh');
 		}
 		redirect('/', 'refresh');
 	}
@@ -570,7 +599,7 @@ class Auth extends CI_Controller
 
 		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
 		{
-			redirect('auth', 'refresh');
+			redirect('user/list', 'refresh');
 		}
 
 		$user = $this->ion_auth->user($id)->row();
@@ -696,8 +725,9 @@ class Auth extends CI_Controller
 			'id'   => 'password_confirm',
 			'type' => 'password'
 		);
-
-		$this->_render_page('auth' . DIRECTORY_SEPARATOR . 'edit_user', $this->data);
+			$this->data['_view'] = 'auth/edit_user';
+	        $this->data['page_title'] = 'Edit  User';
+			$this->load->view('layouts/main',$this->data);
 	}
 
 	/**
@@ -709,7 +739,7 @@ class Auth extends CI_Controller
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
-			redirect('auth', 'refresh');
+			redirect('user/list', 'refresh');
 		}
 
 		// validate form input
@@ -723,7 +753,7 @@ class Auth extends CI_Controller
 				// check to see if we are creating the group
 				// redirect them back to the admin page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect("auth", 'refresh');
+				redirect('user/list', 'refresh');
 			}
 		}
 		else
@@ -759,14 +789,14 @@ class Auth extends CI_Controller
 		// bail if no group id given
 		if (!$id || empty($id))
 		{
-			redirect('auth', 'refresh');
+			redirect('user/list', 'refresh');
 		}
 
 		$this->data['title'] = $this->lang->line('edit_group_title');
 
 		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
 		{
-			redirect('auth', 'refresh');
+			redirect('user/list', 'refresh');
 		}
 
 		$group = $this->ion_auth->group($id)->row();
@@ -788,7 +818,7 @@ class Auth extends CI_Controller
 				{
 					$this->session->set_flashdata('message', $this->ion_auth->errors());
 				}
-				redirect("auth", 'refresh');
+				redirect('user/list', 'refresh');
 			}
 		}
 

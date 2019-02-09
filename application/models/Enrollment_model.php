@@ -56,6 +56,22 @@ class Enrollment_model extends CI_Model {
 		$status = 1;
 		return $this->db->where('schoolyear_status',$status)->get('school_year')->row()->schoolyear_value;
 	}
+
+	public function get_school_year($sy){
+		return $this->db->where('schoolyear_id',$sy)->get('school_year')->row()->schoolyear_value;	
+	}
+
+
+	public function get_active_schoolyear_by_id(){
+		$status = 1;
+		return $this->db->where('schoolyear_status',$status)->get('school_year')->row()->schoolyear_id;
+	}
+
+	public function get_student_grade_in($student,$sy){
+
+		return $this->db->where('student_id',$student)->where('school_year',$sy)->get('enrollment')->row()->levels_id;
+	}
+
 }
 
 /* End of file Enrollment_model.php */

@@ -4,13 +4,14 @@
 				<li><a href="#">
 					<em class="fa fa-home"></em> Dashboard
 				</a></li>
-				<li class="active">Students</li>
+				<li class="">Payments</li>
+				<li class="active">Student Payment Records</li>
 			</ol>
 		</div><!--/.row-->
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Students</h1>
+				<h1 class="page-header">Payment Records</h1>
 			</div>
 		</div><!--/.row-->
 				
@@ -18,14 +19,14 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">List of Students</div>
+					<div class="panel-heading">Student Payment Records</div>
 					<div class="panel-body">
 						<div class="table-responsive">
 							<div>
-								<a href="<?php echo site_url('student/add'); ?>" class="btn btn-success btn-lg"><i class="fa fa-user-plus"></i> New Student</a> 
+							
 							</div>
 							<br>
-								<table class="table table-striped table-bordered table-student-list">
+								<table class="table table-striped table-bordered table-student-payment">
 									<thead>
 								    <tr>
 										<th>ID</th>
@@ -53,9 +54,8 @@
 										<td><?php echo $s['email']; ?></td>
 										<td><?php echo $s['address']; ?></td>
 										<td>
-								            <a title="Edit Student Info " href="<?php echo site_url('student/edit/'.$s['id']); ?>" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i> Edit Info</a> 
 								            
-								            <a title="View Student Info " href="<?php echo site_url('student/view/'.$s['id']); ?>" class=" btn-xs btn btn-primary" ><i  class="fa fa-search"></i> View  Info</a> 
+								            <a title="View Student Info " href="<?php echo site_url('payment/view/'.$s['id']); ?>" class="btn-md btn btn-primary" ><i  class="fa fa-money"></i> View  Payments</a> 
 								            
 								        </td>
 								    </tr>
@@ -71,6 +71,6 @@
 			</div>
 	</div><!-- /.panel-->
 	<script>
-		$('.table-student-list').DataTable();
+		$('.table-student-payment').DataTable();
 	</script>
 		

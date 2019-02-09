@@ -155,13 +155,41 @@
 		</div>
 	</div>
 	
-	<div class="form-group">
-		<div class="col-sm-offset-1 col-sm-8">
-			<button type="submit" class="btn btn-success">Save</button>
-        </div>
-	</div>
+
+			<div class="form-group">
+				<label for="email" class="col-md-1  control-label"><span class="text-danger">*</span>Email</label>
+				<div class="col-md-8">
+					<input type="text" name="email" value="<?php echo ($this->input->post('email') ? $this->input->post('email') : $faculty['email']); ?>" class="form-control" id="email" />
+					<span class="text-danger"><?php echo form_error('email');?></span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+					<label for="password" class="col-md-1  control-label"><span class="text-danger">*</span>Password (Optional)</label>
+					<div class="col-md-8">
+						<input type="password" name="password" value="" class="form-control" id="password" />
+						<span class="text-danger"><?php echo form_error('password');?></span>
+						<div class="helper-block">This password will be used when you log in to MIS</div>
+					</div>
+				</div>
+
+
+			<div class="form-group">
+					<label for="password_confirmation" class="col-md-1  control-label"><span class="text-danger">*</span>Confirm Password</label>
+					<div class="col-md-8">
+						<input type="password" name="password_confirmation" value="" class="form-control" id="password_confirmation" />
+						<span class="text-danger"><?php echo form_error('password_confirmation');?></span>
+						<div class="helper-block"> (If changing password)</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-1 col-sm-8">
+						<button type="submit" class="btn btn-success">Save</button>
+			        </div>
+				</div>
 	
-<?php echo form_close(); ?>
+				<?php echo form_close(); ?>
 					</div>
 				</div>
 			</div>

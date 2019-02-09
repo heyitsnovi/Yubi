@@ -41,6 +41,7 @@ class Faculty extends CI_Controller{
 		$this->form_validation->set_rules('email','Email','required|max_length[100]|valid_email');
 		$this->form_validation->set_rules('contact','Contact','required|max_length[100]');
 		$this->form_validation->set_rules('role','Role','required|max_length[100]');
+        $this->form_validation->set_rules('password','Password','required|min_length[9]');
 		
 		if($this->form_validation->run())     
         {   
@@ -60,7 +61,23 @@ class Faculty extends CI_Controller{
             );
             
             $faculty_id = $this->Faculty_model->add_faculty($params);
-            redirect('faculty/index');
+
+
+                $username = $this->input->post('email');
+                $password = $this->input->post('password');
+                $email = $this->input->post('email');
+                $additional_data = array(
+                           'first_name' => $this->input->post('first_name'),
+                            'last_name' => $this->input->post('last_name'),
+                            'phone'=>$this->input->post('contact'),
+                            'company'=>'UBLI',
+                            'active'=>1
+                            );
+                $group = array('5'); // Sets user to student
+
+                 $this->ion_auth->register($username, $password, $email, $additional_data, $group);
+
+                redirect('faculty/index');
         }
         else
         {            
@@ -93,6 +110,12 @@ class Faculty extends CI_Controller{
 			$this->form_validation->set_rules('email','Email','required|max_length[100]|valid_email');
 			$this->form_validation->set_rules('contact','Contact','required|max_length[100]');
 			$this->form_validation->set_rules('role','Role','required|max_length[100]');
+
+            if(strlen($this->input->post('password')) >0){
+
+                $this->form_validation->set_rules('password','Password','trim|min_length[6]');
+                $this->form_validation->set_rules('password_confirmation','Password Confirmation','matches[password]');
+            }
 		
 			if($this->form_validation->run())     
             {   
@@ -111,8 +134,36 @@ class Faculty extends CI_Controller{
 					'profile' => $this->input->post('profile'),
                 );
 
+                   if(strlen($this->input->post('password')) >0){
+
+
+                     if (!$this->ion_auth->email_check($this->input->post('email'))){
+                          $group_name = 'teacher';
+
+                             $additional_data = array(
+                            'first_name' => $this->input->post('first_name'),
+                            'last_name' => $this->input->post('last_name'),
+                            'company'=>'UBLI'
+                            );
+
+                          $this->ion_auth->register($this->input->post('email'), $this->input->post('password'), strtolower($this->input->post('email')), $additional_data, $group_name);
+                    }else{
+                         $account_info = array(
+                          'first_name' => $this->input->post('first_name'),
+                          'last_name' =>$this->input->post('last_name'),
+                          'password' =>$this->input->post('password_confirmation')
+                           );
+                        $this->ion_auth->update($id, $account_info);
+                    }
+
+  
+                     
+                    }
+
                 $this->Faculty_model->update_faculty($id,$params);            
+                $this->session->set_flashdata('message', 'Faculty details updated');
                 redirect('faculty/index');
+                      
             }
             else
             {
@@ -131,6 +182,16 @@ class Faculty extends CI_Controller{
         $data['page_title'] = 'Faculty Subjects';
         $data['faculty_id'] = $id;
         $data['loads'] = $this->Faculty_model->get_faculty_subjects($id);
+        $this->load->view('layouts/main',$data);
+    }
+
+    function faculty_subjects(){
+
+         $user = $this->ion_auth->user()->row();
+        $data['_view'] = 'faculty/teacher-personal';
+        $data['page_title'] = 'Faculty Subjects';
+        $data['faculty_id'] = $user->id;
+        $data['loads'] = $this->Faculty_model->get_faculty_subjects($this->Faculty_model->get_faculty_id_by_email($user->email));
         $this->load->view('layouts/main',$data);
     }
 }

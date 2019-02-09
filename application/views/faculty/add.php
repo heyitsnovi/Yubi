@@ -140,13 +140,9 @@
 									<span class="text-danger"><?php echo form_error('gender');?></span>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="email" class="col-md-1  control-label"><span class="text-danger">*</span>Email</label>
-								<div class="col-md-8">
-									<input type="text" name="email" value="<?php echo $this->input->post('email'); ?>" class="form-control" id="email" />
-									<span class="text-danger"><?php echo form_error('email');?></span>
-								</div>
-							</div>
+
+
+
 							<div class="form-group">
 								<label for="contact" class="col-md-1  control-label"><span class="text-danger">*</span>Contact</label>
 								<div class="col-md-8">
@@ -155,6 +151,25 @@
 								</div>
 							</div>
 							
+
+							<div class="form-group">
+								<label for="email" class="col-md-1  control-label"><span class="text-danger">*</span>Email</label>
+								<div class="col-md-8">
+									<input type="text" name="email" value="<?php echo $this->input->post('email'); ?>" class="form-control" id="email" />
+									<span class="text-danger"><?php echo form_error('email');?></span>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label for="password" class="col-md-1  control-label"><span class="text-danger">*</span>Password</label>
+								<div class="col-md-8">
+									<input type="password" name="password" value="<?php echo $this->input->post('password'); ?>" class="form-control" id="password" />
+									<span class="text-danger"><?php echo form_error('password');?></span>
+									<div class="helper-block">This password will be used when you log in to MIS</div>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<div class="col-sm-offset-1 col-sm-8">
 									<button type="submit" class="btn btn-success btn-lg">Save</button>

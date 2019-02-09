@@ -7,17 +7,21 @@ class Ajax extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('Enrollment_model');
-		$this->load->library(['form_validation']);
+		$this->load->library(['form_validation','ion_auth']);
 		$this->load->model('Faculty_model');
 	}
 	public function get_section()
 	{
+
+		if ($this->ion_auth->logged_in()){
 		$this->load->model('Student_model');
 		echo json_encode($this->Student_model->get_section($this->input->get('yearlevel')));
+		}
 	}
 
 	public function submit_enrollment(){
 
+		if ($this->ion_auth->logged_in()){
 		$this->form_validation->set_rules('year_level', 'Year Level', 'trim|required|integer');
 		$this->form_validation->set_rules('section', 'Section', 'trim|required|integer');
 		$this->form_validation->set_rules('student', 'Student', 'trim|required|integer');
@@ -37,17 +41,19 @@ class Ajax extends CI_Controller {
 				];
 			$status = $this->Enrollment_model->insert_enrollment($data);
 			echo json_encode(['has_errors'=>'no','errors'=>'']);
+			}
 		}
 	}
 
 	public function drop_student(){
-
-		echo $this->Enrollment_model->drop_student($this->input->post('_student_id'),date('Y').'-'.date('Y',strtotime('+1 year')	));
-
+		if ($this->ion_auth->logged_in()){
+			echo $this->Enrollment_model->drop_student($this->input->post('_student_id'),date('Y').'-'.date('Y',strtotime('+1 year')	));
+		}
 	}
 
 	public function show_add_teachersubject_modal(){
 
+		if ($this->ion_auth->logged_in()){
 			$this->load->model('Student_model');
 			$data['levels'] = $this->Student_model->get_level(null);
 			$data['section'] = $this->Student_model->get_section(null);
@@ -56,10 +62,11 @@ class Ajax extends CI_Controller {
 			$data['faculty_id'] = $this->input->post('faculty_id');
 			$data['time_intervals'] = create_time_range('7:00', '17:00', '1 hour');
 			$this->load->view('faculty/add_subject_ajax',$data);
+		}
 	}
 
 	public function add_subject_to_techer(){
-		
+		if ($this->ion_auth->logged_in()){
 		$this->load->model('Faculty_model');
 		$schedule_params = [
 				'teacher'=>$this->input->post('faculty'),
@@ -76,11 +83,14 @@ class Ajax extends CI_Controller {
 
 		if($status =='1'){
 			echo json_encode(['success'=>'ok']);
+			}
 		}
 
 	}
 
 	public function submit_grades(){
+
+		if ($this->ion_auth->logged_in()){
 
 		for($i=0; $i<count($_POST['student_id']);$i++){
 
@@ -114,6 +124,7 @@ class Ajax extends CI_Controller {
 					$this->Faculty_model->update_grades($this->input->post('student_id')[$i],$this->input->post('_subject_id'),$params);
 				}
 
+			}
 		}
 		
 	}

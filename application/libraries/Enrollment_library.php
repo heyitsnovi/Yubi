@@ -45,6 +45,15 @@ class Enrollment_library
 	public function get_student_complete_name($student_id){
 		return $this->ci->Student_model->get_student_fullname($student_id);
 	}
+
+	public function get_school_year_by_id($sy_id){
+
+		return $this->ci->Enrollment_model->get_school_year($sy_id);
+	}
+
+	public function get_active_schoolyear_by_id(){
+		return $this->ci->Enrollment_model->get_active_schoolyear_by_id();
+	}
 }
 
 /* End of file Enrollment_library.php */

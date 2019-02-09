@@ -23,7 +23,7 @@
 					<div class="panel-body">
 						<div class="table-responsive">
 						<div>
-							<a class="btn btn-success  btn-lg btn-add-facultysubj">Load Subjects</a> 
+						
 						</div>
 						<br>
 						<input type="hidden" name="_faculty_id" value="<?php echo $faculty_id; ?>">
@@ -37,7 +37,6 @@
 								<th>Section</th>
 								<th>Day</th>
 								<th>Time</th>
-								<th>Actions</th>
 						    </tr>
 						    </thead>
 						    <tbody>
@@ -50,9 +49,7 @@
 						    				<td><?php echo $this->enrollment_library->get_section_info_by_id($load['section'],'name'); ?></td>
 						    				<td><?php echo $load['day']; ?></td>
 						    				<td><?php echo $load['time']; ?></td>
-						    				<td>
-						    					<a data-teacher="<?php echo $load['teacher']; ?>" data-subectjid="<?php echo $load['subject'];?>" class="btn btn-danger btn-removesubj">Remove</a>
-						    				</td>
+
 						    			</tr>
 						    	<?php endforeach; ?>
 						    </tbody>
@@ -63,31 +60,4 @@
 				</div>
 			</div>
 	</div><!-- /.panel-->
-	<script>
-		$('.table-faculty-load').DataTable();
-		$(document).on('click','.btn-add-facultysubj',function(){
-			$.ajax({
-				url: '<?php echo base_url('ajax/show_add_teachersubject_modal');?>',
-				type: 'POST',
-				data:{
-					faculty_id : $("input[name='_faculty_id']").val()
-				},
-				success:function(response){
-					var box = bootbox.dialog({
-						title: ' Add Subject To Teacher',
-						size: 'large',
-						message: '  ',
-
-					});
-					box.contents().find('.bootbox-body').html(response);
-				}
-			})
-		});
-
-		$('.btn-removesubj').on('click',function(){
-			if(confirm('Are you sure you want to remove this subject?')){
-				
-			}
-		})
-	</script>
 		

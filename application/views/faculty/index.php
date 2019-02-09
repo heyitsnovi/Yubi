@@ -11,6 +11,12 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<h1 class="page-header">Faculty and Staffs</h1>
+								<?php if($this->session->flashdata('message')):?>
+					<div class="alert alert-success">
+						<strong>Success</strong>
+						<p><?php echo $this->session->flashdata('message');?></p>
+					</div>
+					<?php endif; ?>
 			</div>
 		</div><!--/.row-->
 				
@@ -33,7 +39,7 @@
 								<th>Address</th>
 								<th>Email</th>
 								<th>Contact</th>
-								<th>Role</th>
+								
 								<th>Actions</th>
 						    </tr>
 						    </thead>
@@ -45,12 +51,12 @@
 								<td><?php echo $f['address']; ?></td>
 								<td><?php echo $f['email']; ?></td>
 								<td><?php echo $f['contact']; ?></td>
-								<td><?php echo $f['role']; ?></td>
+								
 								
 								<td>
-						            <a href="<?php echo site_url('faculty/edit/'.$f['id']); ?>" class="btn btn-info btn-md">Edit</a> 
-						            <a href="<?php echo site_url('faculty/subjects/'.$f['id']); ?>" class="btn btn-info btn-md">View Subjects</a> 
-						            <a href="<?php echo site_url('grades/subjects/');?>/<?php echo $f['id']; ?>" class="btn btn-info btn-md"> Submit Grade</a>
+						            <a href="<?php echo site_url('faculty/edit/'.$f['id']); ?>" class="btn btn-info  btn-xs">Edit</a> 
+						            <a href="<?php echo site_url('faculty/subjects/'.$f['id']); ?>" class="btn btn-info  btn-xs"> Subjects</a> 
+						            <a href="<?php echo site_url('grades/subjects/');?>/<?php echo $f['id']; ?>" class="btn btn-info  btn-xs"> Submit Grade</a>
 						        </td>
 						    </tr>
 							<?php } ?>
