@@ -13,6 +13,7 @@ class Enrollment_library
         $this->ci->load->model('Enrollment_model');
         $this->ci->load->model('Faculty_model');
         $this->ci->load->model('Student_model');
+        $this->ci->load->model('Charge_model');
         
 	}
 
@@ -54,6 +55,37 @@ class Enrollment_library
 	public function get_active_schoolyear_by_id(){
 		return $this->ci->Enrollment_model->get_active_schoolyear_by_id();
 	}
+
+	public function get_student_current_section($student_id){
+
+		return $this->ci->Enrollment_model->get_student_current_section($student_id);
+	}
+
+	public function get_total_schoolyear_payable($level_id,$school_year){
+		return $this->ci->Charge_model->get_total_schoolyear_payable($level_id,$school_year);
+	}
+
+	public function get_percentage($val,$total){
+
+		$a = $val;
+ 		$b = $total;
+ 		$c = $a/$b;
+ 		$d = $c*100;
+      return $d;
+
+	}
+
+	public function get_percentage_value($val,$total) {
+
+		 $a = $val/100;
+		 $b = $a*$total;
+		 return $b;
+ }
+
+ public function get_all_payment($student_id,$school_year){
+ 	return $this->ci->Charge_model->get_total_paid($student_id,$school_year);
+ }
+ 
 }
 
 /* End of file Enrollment_library.php */

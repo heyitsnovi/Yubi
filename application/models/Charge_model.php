@@ -57,4 +57,30 @@ class Charge_model extends CI_Model
     {
         return $this->db->delete('charges',array('charge_id'=>$charge_id));
     }
+
+    function add_payment($data){
+
+        $sql =  $this->db->insert('payment_log',$data);
+        return $this->db->insert_id();
+    }
+
+    function get_total_paid($student_id,$schoolyear_id){
+ 
+        return $this->db->select(' SUM(amount_paid) as ttl')
+                    ->from('payment_log')
+                    ->where('schoolyear_id',$schoolyear_id)
+                    ->where('paid_by',$student_id)
+                    ->get()->row()->ttl;
+
+    }
+
+    function get_total_schoolyear_payable($level,$sy){
+
+            return $this->db->select(' SUM(charge_amount) as charge_amt')
+                    ->from('charges')
+                    ->where('charge_level',$level)
+                    ->where('charge_sy',$sy)
+                    ->get()->row()->charge_amt;
+
+    }
 }

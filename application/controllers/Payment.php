@@ -23,10 +23,17 @@ class Payment extends CI_Controller {
 	}
 
 	public function view($student_id){
+
+		$grade_in = $this->Enrollment_model->get_student_grade_in($student_id,$this->enrollment_library->get_school_year_by_id($this->enrollment_library->get_active_schoolyear_by_id()));
 		 
         $data['_view'] = 'payment/view';
         $data['page_title'] = 'Student Payment Records';
+        $data['student_id'] = $student_id;
+        if($grade_in!==NULL){
         $data['student_grade_in'] = $this->Enrollment_model->get_student_grade_in($student_id,$this->enrollment_library->get_school_year_by_id($this->enrollment_library->get_active_schoolyear_by_id()));
+    	}else{
+    		$data['student_grade_in'] = 0;
+    	}
         $data['statement']  = $this->Charge_model->get_all_charges_by_id($data['student_grade_in']);
         $this->load->view('layouts/main',$data);
 	}

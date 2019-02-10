@@ -6,8 +6,8 @@ class Ajax extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('Enrollment_model');
-		$this->load->library(['form_validation','ion_auth']);
+		$this->load->model(['Enrollment_model','Charge_model']);
+		$this->load->library(['form_validation','ion_auth','enrollment_library']);
 		$this->load->model('Faculty_model');
 	}
 	public function get_section()
@@ -127,6 +127,16 @@ class Ajax extends CI_Controller {
 			}
 		}
 		
+	}
+
+	public function add_invoice(){
+		$data = [
+			'amount_paid'=>$this->input->post('amt'),
+			'paid_by'=>$this->input->post('stud'),
+			'date_paid'=>date('Y-m-d h:i:s'),
+			'schoolyear_id'=>$this->enrollment_library->get_active_schoolyear_by_id()
+			];
+		$this->Charge_model->add_payment($data);
 	}
 
 }

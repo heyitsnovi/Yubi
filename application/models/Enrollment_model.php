@@ -68,8 +68,16 @@ class Enrollment_model extends CI_Model {
 	}
 
 	public function get_student_grade_in($student,$sy){
-
+		if( $this->db->where('student_id',$student)->where('school_year',$sy)->get('enrollment')->row()!==NULL){
 		return $this->db->where('student_id',$student)->where('school_year',$sy)->get('enrollment')->row()->levels_id;
+		}else{
+			return ;
+		}
+	}
+
+	public function get_student_current_section($student_id){
+
+		return $this->db->where('student_id',$student_id)->get('enrollment')->result();
 	}
 
 }

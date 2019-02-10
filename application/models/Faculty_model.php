@@ -69,8 +69,11 @@ class Faculty_model extends CI_Model
     }
 
     function get_level_detail_by_id($level_id,$detail){
-
+        if($this->db->where('levels_id',$level_id)->get('levels')->row()!==NULL){
         return $this->db->where('levels_id',$level_id)->get('levels')->row()->$detail;
+        }else{
+            return ;
+        }
     }
 
     function get_section_detail_by_id($section_id,$detail){
