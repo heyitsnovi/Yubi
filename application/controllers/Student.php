@@ -56,7 +56,7 @@ class Student extends CI_Controller{
 		$this->form_validation->set_rules('citizenship','Citizenship','required|max_length[100]');
 		$this->form_validation->set_rules('religion','Religion','required|max_length[100]');
 		$this->form_validation->set_rules('contact','Contact','required|max_length[100]');
-		$this->form_validation->set_rules('email','Email','required|max_length[100]|valid_email');
+		$this->form_validation->set_rules('email','Email','required|max_length[100]|valid_email|is_unique[users.email]');
 		$this->form_validation->set_rules('address','Address','required|max_length[100]');
         $this->form_validation->set_rules('fathername','Father','required|max_length[100]');
         $this->form_validation->set_rules('fatherswork','Father Occupation','required|max_length[100]');
@@ -111,9 +111,22 @@ class Student extends CI_Controller{
                 'g_address'=>$this->input->post('guardianaddress'),
 
             ];
+                $username = $this->input->post('email');
+                $password = $this->input->post('password');
+                $email =$this->input->post('email');
+                $additional_data = array(
+                            'first_name' =>$this->input->post('first_name'),
+                            'last_name' => $this->input->post('last_name'),
+                            'company'=>'UBLI',
+                            'phone'=>$this->input->post('contact'),
+                            'active'=>'0'
+                            );
+                $group = array('3'); // Sets user to student
 
-            $guardian_id = $this->Student_model->insert_additional_info($guardian_info);
-            redirect('student/index');
+                $this->ion_auth->register($username, $password, $email, $additional_data, $group);
+
+                $guardian_id = $this->Student_model->insert_additional_info($guardian_info);
+                redirect('student/index');
         }
         else
         {            
@@ -132,6 +145,7 @@ class Student extends CI_Controller{
         $data['student'] = $this->Student_model->get_student($id);
         $data['guardian'] = $this->Student_model->get_guardian($id);
         $data['page_title'] = 'Editing Student Info';
+        $data['student_usertbl_id'] = $this->Student_model->get_student_id_from_table_users($data['student']['email']);
         
         if(isset($data['student']['id']))
         {
@@ -186,6 +200,18 @@ class Student extends CI_Controller{
                 'g_address'=>$this->input->post('guardianaddress'),
 
                 ];
+
+
+              if(strlen($this->input->post('password')) >0){
+
+ 
+                         $account_info = array(
+                          'first_name' => $this->input->post('first_name'),
+                          'last_name' =>$this->input->post('last_name'),
+                          'password' =>$this->input->post('password')
+                           );
+                        $this->ion_auth->update($this->input->post('tbluser_student_id'), $account_info);
+                    }
 
                 $this->Student_model->update_student($id,$params);     
                 $this->Student_model->update_guardian_info($guardian_info,$id);

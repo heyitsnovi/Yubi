@@ -9,7 +9,12 @@ class Faculty extends CI_Controller{
     {
         parent::__construct();
         $this->load->model('Faculty_model');
-        $this->load->library('enrollment_library');
+        $this->load->library('enrollment_library','ion_auth');
+
+    if (!$this->ion_auth->in_group(['admin', 'registrar']))
+        {
+            redirect('auth/login', 'refresh');
+        }
     } 
 
     /*
@@ -95,6 +100,7 @@ class Faculty extends CI_Controller{
         // check if the faculty exists before trying to edit it
         $data['faculty'] = $this->Faculty_model->get_faculty($id);
         $data['page_title'] = 'Faculty / Staffs List - Edit';
+          $data['faculty_usertbl_id'] = $this->Faculty_model->get_faculty_id_from_table_users($data['faculty']['email']);
         if(isset($data['faculty']['id']))
         {
             $this->load->library('form_validation');
@@ -153,7 +159,7 @@ class Faculty extends CI_Controller{
                           'last_name' =>$this->input->post('last_name'),
                           'password' =>$this->input->post('password_confirmation')
                            );
-                        $this->ion_auth->update($id, $account_info);
+                        $this->ion_auth->update($this->input->post('tbluser_faculty_id'), $account_info);
                     }
 
   

@@ -126,4 +126,9 @@ class Faculty_model extends CI_Model
     function get_faculty_id_by_email($faculty_email){
         return $this->db->where('email',$faculty_email)->get('faculty')->row()->id;
     }
+
+        function get_faculty_id_from_table_users($email){
+
+        return $this->db->where('email',$email)->get('users')->row()->id;
+    }
 }

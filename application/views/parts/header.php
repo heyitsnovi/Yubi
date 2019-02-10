@@ -39,7 +39,25 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
 				<a class="navbar-brand" href="#"><span>UB - </span>Loon MIS</a>
-				 
+				 	<ul class="nav navbar-top-links navbar-right">
+ 
+					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+						<em class="fa fa-user"></em> 
+					</a>
+						<ul class="dropdown-menu dropdown-alerts">
+							<li><a href="<?php echo base_url('user/settings/change-password'); ?>">
+								<div><em class="fa fa-lock"></em>Change Account Password
+								</div>
+							</a></li>
+							<li class="divider"></li>
+							<li><a href="<?php echo base_url('auth/logout'); ?>">
+								<div><em class="fa fa-power-off"></em> Logout
+								 </div>
+							</a></li>
+							
+						</ul>
+					</li>
+				</ul>
 			</div>
 		</div><!-- /.container-fluid -->
 	</nav>
@@ -64,21 +82,7 @@
 			
 			<li><a href="<?php echo base_url('faculty');?>"><em class="fa fa-id-card">&nbsp;</em> Faculty /Staffs </a></li>
 			
-			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
-				<em class="fa fa-cog">&nbsp;</em> Data Maintenance <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
-				</a>
-				<ul class="children collapse" id="sub-item-1">
-					<li><a href="<?php echo base_url('subject');?>" >
-						<span class="fa fa-arrow-right">&nbsp;</span> Subjects
-					</a></li>
-					<li><a class="" href="<?php echo base_url('level');?>">
-						<span class="fa fa-arrow-right">&nbsp;</span> Levels
-					</a></li>
-					<li><a class="" href="<?php echo base_url('section'); ?>">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sections
-					</a></li>
-				</ul>
-			</li>
+
 
 			<li class="parent "><a data-toggle="collapse" href="#sub-item-2">
 				<em class="fa fa-list-alt">&nbsp;</em> Grading Sheet<span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
@@ -103,6 +107,22 @@
 				</ul>
 			</li>
 
+
+			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
+				<em class="fa fa-cog">&nbsp;</em> Data Maintenance <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-1">
+					<li><a href="<?php echo base_url('subject');?>" >
+						<span class="fa fa-arrow-right">&nbsp;</span> Subjects
+					</a></li>
+					<li><a class="" href="<?php echo base_url('level');?>">
+						<span class="fa fa-arrow-right">&nbsp;</span> Levels
+					</a></li>
+					<li><a class="" href="<?php echo base_url('section'); ?>">
+						<span class="fa fa-arrow-right">&nbsp;</span> Sections
+					</a></li>
+				</ul>
+			</li>
 			<li><a href="<?php echo base_url('user/list'); ?>"><em class="fa fa-user">&nbsp;</em>Site Users</a></li>
 			<?php endif;?>
 
@@ -135,7 +155,7 @@
 			<?php endif; ?>
 
 
-			<li><a href="<?php echo base_url('auth/logout'); ?>"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+ 
 		</ul>
 	</div>
 	</body>

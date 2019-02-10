@@ -57,3 +57,4 @@ $route['user/list'] = 'auth/index';
 $route['user/add'] = 'auth/create_user';
 $route['admin'] = 'auth/index';
 $route['teacher/subjects']='faculty/faculty_subjects';
+$route['user/settings/change-password'] = 'auth/change_password';

@@ -188,7 +188,7 @@
 						<button type="submit" class="btn btn-success">Save</button>
 			        </div>
 				</div>
-	
+			<input type="hidden" name="tbluser_faculty_id" value="<?php echo $faculty_usertbl_id;?>" />
 				<?php echo form_close(); ?>
 					</div>
 				</div>

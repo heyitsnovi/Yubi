@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2019 at 01:47 PM
+-- Generation Time: Feb 10, 2019 at 01:24 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -21,6 +21,46 @@ SET time_zone = "+00:00";
 --
 -- Database: `yubi`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `charges`
+--
+
+CREATE TABLE `charges` (
+  `charge_id` int(11) NOT NULL,
+  `charge_name` varchar(100) NOT NULL,
+  `charge_level` int(11) DEFAULT NULL,
+  `charge_amount` double NOT NULL,
+  `charge_sy` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `charges`
+--
+
+INSERT INTO `charges` (`charge_id`, `charge_name`, `charge_level`, `charge_amount`, `charge_sy`) VALUES
+(1, 'Computer Fee', 3, 20, 1),
+(2, 'Stage Fee', 3, 150, 1),
+(3, 'Chair Fee', 3, 35, 1),
+(4, 'School Bus Fee', 3, 45, 1),
+(5, 'Monthly Parking Fee', 3, 5, 1),
+(6, 'Tuition Fee', 3, 1250, 1),
+(7, 'Janitor Fee', 3, 10, 1),
+(8, 'Library Fee', 4, 10, 1),
+(9, 'Supplementary Book', 1, 5, 1),
+(10, 'Tuition Fee', 14, 1500, 1),
+(11, 'Laboratory Fee', 14, 400, 1),
+(12, 'Janitor Fee', 14, 30, 1),
+(13, 'Guard Fee', 14, 90, 1),
+(14, 'Boyscout/Girl Scout Fee', 14, 10, 1),
+(15, 'Insurance Fee', 14, 100, 1),
+(16, 'Tuition Fee', 16, 3000, 1),
+(17, 'Library Fee', 16, 100, 1),
+(18, 'Guard Fee', 16, 90, 1),
+(19, 'Laboratory Fee', 16, 100, 1),
+(20, 'School Bus Fee', 16, 150, 1);
 
 -- --------------------------------------------------------
 
@@ -99,7 +139,8 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 (3, 'student', 'student default'),
 (4, 'cashier', 'Cashier Role'),
 (5, 'teacher', 'Teacher Group'),
-(6, 'librarian', 'Librarian');
+(6, 'librarian', 'Librarian'),
+(7, 'registrar', 'Registrar Group');
 
 -- --------------------------------------------------------
 
@@ -169,6 +210,20 @@ CREATE TABLE `login_attempts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payment_log`
+--
+
+CREATE TABLE `payment_log` (
+  `payment_id` int(11) NOT NULL,
+  `schoolyear_id` int(11) DEFAULT NULL,
+  `amount_paid` double NOT NULL,
+  `paid_by` int(11) NOT NULL,
+  `date_paid` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `rooms`
 --
 
@@ -177,6 +232,13 @@ CREATE TABLE `rooms` (
   `name` varchar(100) NOT NULL,
   `incharge` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`id`, `name`, `incharge`) VALUES
+(1, 'St. Joseph', 0);
 
 -- --------------------------------------------------------
 
@@ -195,6 +257,19 @@ CREATE TABLE `schedules` (
   `time` varchar(100) NOT NULL,
   `schoolyear` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `schedules`
+--
+
+INSERT INTO `schedules` (`id`, `teacher`, `subject`, `room`, `level`, `section`, `day`, `time`, `schoolyear`) VALUES
+(1, 1, 1, 1, 14, 1, 'Monday,Wednesday,Friday', '9:00-10:00', '2019-2020'),
+(2, 1, 2, 1, 14, 1, 'Tuesday,Thursday', '7:00-8:00', '2019-2020'),
+(3, 1, 3, 1, 14, 1, 'Monday,Wednesday,Friday', '1:00-2:00', '2019-2020'),
+(4, 1, 4, 1, 14, 1, 'Monday,Wednesday,Friday', '11:00-12:00', '2019-2020'),
+(5, 2, 5, 1, 14, 1, 'Monday,Wednesday,Friday', '8:00-9:00', '2019-2020'),
+(6, 3, 6, 1, 3, 2, 'Monday,Wednesday,Friday', '7:00-8:00', '2019-2020'),
+(7, 3, 15, 1, 16, 2, 'Monday', '4:00-5:00', '2019-2020');
 
 -- --------------------------------------------------------
 
@@ -227,6 +302,14 @@ CREATE TABLE `sections` (
   `level` int(11) NOT NULL,
   `adviser` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sections`
+--
+
+INSERT INTO `sections` (`id`, `name`, `level`, `adviser`) VALUES
+(1, 'G12 STEM SECTION A', 14, 1),
+(2, 'G12 - Silver', 16, 3);
 
 -- --------------------------------------------------------
 
@@ -264,6 +347,27 @@ CREATE TABLE `subjects` (
   `description` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`id`, `code`, `name`, `description`) VALUES
+(1, '10001', 'Earth Science', 'Use of hydrometereological tools.'),
+(2, '10002', 'Pre-Calculus and Basic Calculus', 'Pre-Calculus and Basic Calculus'),
+(3, '10003', 'Physics', 'Physics'),
+(4, '10004', 'P.E.', 'Pampalakas ng Katawan '),
+(5, '10006', 'English I', 'English SHS'),
+(6, '13123121', 'Creative Writing', 'Creative Writing'),
+(7, '1231212321', 'Introduction to World Religions and Belief Systems.', 'Introduction to World Religions and Belief Systems.'),
+(8, '1231111', 'Creative Nonfiction.', 'Creative Nonfiction.'),
+(9, '234324324', 'Trends, Networks, and Critical Thinking in the 21st Century Culture.', 'Trends, Networks, and Critical Thinking in the 21st Century Culture.'),
+(10, '45323111', 'Philippine Politics and Governance.', 'Philippine Politics and Governance.'),
+(11, '1123331', 'Community Engagement, Solidarity, and Citizenship.', 'Community Engagement, Solidarity, and Citizenship.'),
+(12, '5464322', 'Community Engagement, Solidarity, and Citizenship', 'Community Engagement, Solidarity, and Citizenship'),
+(13, '231111', 'Disciplines and Ideas in the Social Sciences', 'Disciplines and Ideas in the Social Sciences'),
+(14, '3433333', 'Disciplines and Ideas in the Applied Social Sciences', 'Disciplines and Ideas in the Applied Social Sciences'),
+(15, '22221111', 'Work Immersion', 'Work Immersion');
+
 -- --------------------------------------------------------
 
 --
@@ -295,9 +399,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1548925265, 1, 'Admin', 'istrator', 'ADMIN', '0'),
-(2, '::1', 'johnd@mail.com', '$2y$08$jwKsKHRPwfO6Fu0SGLTFg.dmpyrfyxF/nF8WW2VKUOJYsaLKH2mfC', NULL, 'johnd@mail.com', NULL, NULL, NULL, NULL, 1548813846, NULL, 1, 'John', 'Doe', '', '09382830876'),
-(3, '::1', 'jmister@mail.com', '$2y$08$tA/yPaiXSXTKbvVJnGvP0eJPH1S5YXYkhQW6pZZ3YAK8OZ6PHpIBC', NULL, 'jmister@mail.com', NULL, NULL, NULL, NULL, 1548823460, NULL, 1, 'John', 'Mister', 'SCHOOL', '12345678');
+(1, '', 'administrator', '$2y$08$OdMY2eVo8znaZ6EWfcs1ie1oHF3HvRWe8/SyJnpPG3rDonys38q4K', NULL, 'admin@admin.com', NULL, NULL, NULL, NULL, 1549801422, NULL, 1, 'Admi', 'Nistrator', 'UBLI', '09191234567');
 
 -- --------------------------------------------------------
 
@@ -316,13 +418,17 @@ CREATE TABLE `users_groups` (
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(8, 1, 1),
-(3, 2, 2),
-(7, 3, 6);
+(1, 1, 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `charges`
+--
+ALTER TABLE `charges`
+  ADD PRIMARY KEY (`charge_id`);
 
 --
 -- Indexes for table `enrollment`
@@ -368,6 +474,12 @@ ALTER TABLE `levels`
 --
 ALTER TABLE `login_attempts`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `payment_log`
+--
+ALTER TABLE `payment_log`
+  ADD PRIMARY KEY (`payment_id`);
 
 --
 -- Indexes for table `rooms`
@@ -433,6 +545,12 @@ ALTER TABLE `users_groups`
 --
 
 --
+-- AUTO_INCREMENT for table `charges`
+--
+ALTER TABLE `charges`
+  MODIFY `charge_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT for table `enrollment`
 --
 ALTER TABLE `enrollment`
@@ -454,7 +572,7 @@ ALTER TABLE `grades`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `guardian`
@@ -472,19 +590,25 @@ ALTER TABLE `levels`
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `payment_log`
+--
+ALTER TABLE `payment_log`
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `school_year`
@@ -496,7 +620,7 @@ ALTER TABLE `school_year`
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -508,19 +632,19 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

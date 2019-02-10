@@ -9,7 +9,7 @@
 </div>
 <input type="hidden" name="_student_to_enroll" value="<?php echo $student_id;?>">
 
-<div class="form-group">
+<div class="form-group" style="display: none;">
 	<label>Previous Grade & Section:</label>
 	<span class="prevgradesection">Grade 3 Sampanguita</span>
 </div>

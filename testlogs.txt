@@ -1,0 +1,34 @@
+Module Name: Student
+
+> NEW STUDENT - OK
+> EDIT STUDENT - OK
+
+Module Name: Faculty
+> NEW STAFF - OK
+> EDIT STAFF - OK
+
+
+
+
+
+
+
+
+
+
+TODO:
+
+Printing Stuffs for teacher,student and admin (reports)
+Viewing Stuffs for students
+
+Faculty->Subjects -> Remove Subject (must be functional)
+
+Faculty->Submit Grade ->Add Grades -> 
+*When Clicking a subject,should display the subject details to the next page
+* Disable Save/Edit button when there are no students currently enrolled
+
+Grading SHeet
+->Add SUbject
+*must display the name of the teacher that is currently selected
+->Input grades
+* display the subject name

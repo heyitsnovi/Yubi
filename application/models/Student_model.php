@@ -108,4 +108,9 @@ class Student_model extends CI_Model
                         ->get('schedules')
                         ->result();
     }
+
+    function get_student_id_from_table_users($email){
+
+        return $this->db->where('email',$email)->get('users')->row()->id;
+    }
 }
