@@ -19,11 +19,13 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Inputing Grades :</div>
+					<div class="panel-heading">Subject Name: <?php echo($subject_info['name']); ?></div>
 					<div class="panel-body">
 						<div class="table-responsive">
 						<div>
-							
+							<div class="">
+								<label>Subject Code: <?php echo $subject_info['code']; ?></label>
+							</div>
 						</div>
 						<br>
 						<form method="POST" class="form-grading-sheet">

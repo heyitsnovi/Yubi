@@ -23,7 +23,7 @@
 					<div class="panel-body">
 						<div class="table-responsive">
 						<div>
-							
+							<label>Teacher: <?php echo $teacher_name->first_name.' '.$teacher_name->last_name[0].'. '.$teacher_name->last_name; ?></label>
 						</div>
 						<br>
 						<input type="hidden" name="_faculty_id" value="<?php echo $faculty_id; ?>">
@@ -51,7 +51,9 @@
 						    				<td><?php echo $load['day']; ?></td>
 						    				<td><?php echo $load['time']; ?></td>
 						    				<td>
-						    					<a href="<?php echo base_url('grades/subject_code'); ?>/<?php echo $load['teacher'];?>/<?php echo $load['subject'];?>" class="btn btn-success"><i class="fa fa-plus"></i> Add Grades</a>
+						    					<a href="<?php echo base_url('grades/subject_code'); ?>/<?php echo $load['teacher'];?>/<?php echo $load['subject'];?>" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Grades</a>
+
+						    					<a target="_blank" href="<?php echo base_url('grades/print_grades'); ?>/<?php echo $load['teacher'];?>/<?php echo $load['subject'];?>" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print Grades</a>
 						    				</td>
 						    			</tr>
 						    	<?php endforeach; ?>

@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url','timerange_helper');
+$autoload['helper'] = array('url','timerange_helper','grade_template_helper');
 
 /*
 | -------------------------------------------------------------------
