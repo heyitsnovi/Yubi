@@ -19,8 +19,8 @@ class Charge_model extends CI_Model
         return $this->db->get_where('charges',array('charge_id'=>$charge_id))->row_array();
     }
         
-    function get_all_charges_by_id($level){
-        return $this->db->where('charge_level',$level)->get('charges')->result();
+    function get_all_charges_by_id($level,$sy){
+        return $this->db->where('charge_level',$level)->where('charge_sy',$sy)->get('charges')->result();
     }
 
     /*
@@ -82,5 +82,10 @@ class Charge_model extends CI_Model
                     ->where('charge_sy',$sy)
                     ->get()->row()->charge_amt;
 
+    }
+
+    function get_payment_log($student_id){
+
+        return $this->db->where('paid_by',$student_id)->get('payment_log')->result();
     }
 }

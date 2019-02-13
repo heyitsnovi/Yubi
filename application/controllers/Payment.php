@@ -34,7 +34,7 @@ class Payment extends CI_Controller {
     	}else{
     		$data['student_grade_in'] = 0;
     	}
-        $data['statement']  = $this->Charge_model->get_all_charges_by_id($data['student_grade_in']);
+        $data['statement']  = $this->Charge_model->get_all_charges_by_id($data['student_grade_in'],$this->enrollment_library->get_active_schoolyear_by_id());
         $this->load->view('layouts/main',$data);
 	}
 }

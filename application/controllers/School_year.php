@@ -15,9 +15,9 @@ class School_year extends CI_Controller{
      * Listing of school_year
      */
     function index()
-    {
+    { 
         $data['school_year'] = $this->School_year_model->get_all_school_year();
-        
+        $data['page_title'] = 'School Year List';
         $data['_view'] = 'school_year/index';
         $this->load->view('layouts/main',$data);
     }
@@ -28,7 +28,7 @@ class School_year extends CI_Controller{
     function add()
     {   
         $this->load->library('form_validation');
-
+      $data['page_title'] = 'School Year Add';
 		$this->form_validation->set_rules('schoolyear_status','Schoolyear Status','required|integer');
 		$this->form_validation->set_rules('schoolyear_value','Schoolyear Value','required|max_length[20]');
 		
@@ -40,6 +40,16 @@ class School_year extends CI_Controller{
             );
             
             $school_year_id = $this->School_year_model->add_school_year($params);
+
+           
+
+             $params = array(
+                    'schoolyear_status' => 1,
+                );
+
+                $this->School_year_model->update_school_year($schoolyear_id,$params);  
+                $this->School_year_model->deactivate_previous_schoolyear();
+
             redirect('school_year/index');
         }
         else
@@ -56,7 +66,7 @@ class School_year extends CI_Controller{
     {   
         // check if the school_year exists before trying to edit it
         $data['school_year'] = $this->School_year_model->get_school_year($schoolyear_id);
-        
+              $data['page_title'] = 'School Year Update';
         if(isset($data['school_year']['schoolyear_id']))
         {
             $this->load->library('form_validation');

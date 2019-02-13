@@ -121,6 +121,9 @@
 					<li><a class="" href="<?php echo base_url('section'); ?>">
 						<span class="fa fa-arrow-right">&nbsp;</span> Sections
 					</a></li>
+							<li><a class="" href="<?php echo base_url('school_year'); ?>">
+						<span class="fa fa-arrow-right">&nbsp;</span> Update School Year
+					</a></li>
 				</ul>
 			</li>
 			<li><a href="<?php echo base_url('user/list'); ?>"><em class="fa fa-user">&nbsp;</em>Site Users</a></li>
@@ -154,7 +157,11 @@
 				</li>
 			<?php endif; ?>
 
-
+			<?php if($this->ion_auth->in_group(['student'])):?>
+				<li><a href="<?php echo base_url('student_menu/student_view_grade');?>"><em class="fa fa-calculator">&nbsp;</em> My Grades</a></li>
+				<li><a href="<?php echo base_url('student_menu/student_payment');?>"><em class="fa fa-money">&nbsp;</em> My Payments</a></li>
+				</li>
+			<?php endif; ?>
  
 		</ul>
 	</div>

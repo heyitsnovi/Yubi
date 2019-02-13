@@ -95,7 +95,8 @@ class Faculty_model extends CI_Model
     }
 
     function get_student_by_section_id($section_id){
-        return $this->db->where('section',$section_id)->get('enrollment')->result();
+        $active_sy = $this->db->where('schoolyear_status',1)->get('school_year')->row()->schoolyear_value;
+        return $this->db->where('section',$section_id)->where('school_year',$active_sy)->get('enrollment')->result();
     }
 
     function get_advisory_section_by_teacher($teacher_id){
@@ -120,7 +121,8 @@ class Faculty_model extends CI_Model
     }
 
     function get_grades($subject_id){
-        return $this->db->where('subject_id',$subject_id)->get('grades')->result();
+       $active_sy = $this->db->where('schoolyear_status',1)->get('school_year')->row()->schoolyear_id;
+        return $this->db->where('subject_id',$subject_id)->where('schoolyear_id',$active_sy)->get('grades')->result();
     }   
 
     function get_faculty_id_by_email($faculty_email){

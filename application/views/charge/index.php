@@ -27,14 +27,18 @@
 							</div>
 							<br>
 							 <table class="table table-striped table-bordered table-charge-list">
+							 	<thead>
 							    <tr>
 									<th>Charge ID</th>
 									<th>Charge Name</th>
 									<th>Level/Grade</th>
 									<th> Amount</th>
 									<th>School Year</th>
+									<th>Semester</th>
 									<th>Actions</th>
 							    </tr>
+							    </thead>
+							    <tbody>
 								<?php foreach($charges as $c){ ?>
 							    <tr>
 									<td><?php echo $c['charge_id']; ?></td>
@@ -42,6 +46,7 @@
 									<td><?php echo $this->enrollment_library->get_level_info_by_id($c['charge_level'],'name'); ?></td>
 									<td><?php echo $c['charge_amount']; ?></td>
 									<td><?php echo $this->enrollment_library->get_school_year_by_id($c['charge_sy']); ?></td>
+									<td><?php echo $c['charge_semester'] =='1' ? '1st Sem' :'2nd Sem';?></td>
 									<td>
 							            <a href="<?php echo site_url('charge/edit/'.$c['charge_id']); ?>" class="btn btn-info btn-md">
 							            <i class="fa fa-pencil"></i>
@@ -50,6 +55,7 @@
 							        </td>
 							    </tr>
 								<?php } ?>
+								</tbody>
 							</table>
 							</div>
 						</div>

@@ -51,7 +51,8 @@
 						    				<td><?php echo $load['day']; ?></td>
 						    				<td><?php echo $load['time']; ?></td>
 						    				<td>
-						    					<a data-teacher="<?php echo $load['teacher']; ?>" data-subectjid="<?php echo $load['subject'];?>" class="btn btn-danger btn-removesubj">Remove</a>
+						    					<a data-teacher="<?php echo $load['teacher']; ?>" data-subectjid="<?php echo $load['subject'];?>" class="btn btn-sm btn-success subj_viewstuds">Students </a>
+						    					<a style="display: none;" data-teacher="<?php echo $load['teacher']; ?>" data-subectjid="<?php echo $load['subject'];?>" class="btn  btn-sm btn-danger btn-removesubj">Remove</a>
 						    				</td>
 						    			</tr>
 						    	<?php endforeach; ?>
@@ -89,5 +90,33 @@
 				
 			}
 		})
+
+		$('.subj_viewstuds').on('click',function(){
+			// var box = bootbox.dialog({
+			// 	'title': 'Student List',
+			// 	'message':' ',
+			// 	'size':'medium'
+			// });
+
+			var thisobj  = this;
+			$.ajax({
+				url: '<?php echo base_url('ajax/show_subject_students'); ?>',
+				type:'POST',
+				data:{
+					teacher:thisobj.dataset.teacher,
+					subject:thisobj.dataset.subectjid
+				},success:function(response){
+
+					var box = bootbox.dialog({
+						'title': 'Student List',
+						'message':' ',
+						'size':'medium'
+					});
+
+					box.contents().find('.bootbox-body').html(response);
+
+				}
+			})
+		});
 	</script>
 		

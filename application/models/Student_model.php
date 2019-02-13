@@ -113,4 +113,9 @@ class Student_model extends CI_Model
 
         return $this->db->where('email',$email)->get('users')->row()->id;
     }
+
+    function get_student_id_from_table_students_by_email($student_email){
+
+        return $this->db->where('email',$student_email)->get('students')->row()->id;
+    }
 }

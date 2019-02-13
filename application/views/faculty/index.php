@@ -56,7 +56,7 @@
 								<td>
 						            <a href="<?php echo site_url('faculty/edit/'.$f['id']); ?>" class="btn btn-info  btn-xs">Edit</a> 
 						            <a href="<?php echo site_url('faculty/subjects/'.$f['id']); ?>" class="btn btn-info  btn-xs"> Subjects</a> 
-						            <a href="<?php echo site_url('grades/subjects/');?>/<?php echo $f['id']; ?>" class="btn btn-info  btn-xs"> Submit Grade</a>
+						            <a href="<?php echo site_url('grades/subjects/');?><?php echo $f['id']; ?>" class="btn btn-info  btn-xs"> Submit Grade</a>
 						        </td>
 						    </tr>
 							<?php } ?>

@@ -53,4 +53,12 @@ class School_year_model extends CI_Model
     {
         return $this->db->delete('school_year',array('schoolyear_id'=>$schoolyear_id));
     }
+
+    function deactivate_previous_schoolyear(){
+        $data =['schoolyear_status'=>0];
+
+        $prev =  $this->db->where('schoolyear_status',1)->get('school_year')->row()->schoolyear_id;
+
+        return $this->db->where('schoolyear_id',$prev)->update('school_year',$data);
+    }
 }

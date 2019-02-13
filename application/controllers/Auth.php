@@ -87,6 +87,8 @@ class Auth extends CI_Controller
 				}
 				else if($this->ion_auth->in_group(['teacher'])){
 					redirect('/teacher/subjects','refresh');
+				}else if($this->ion_auth->in_group(['student'])){
+					redirect('/student_menu/student_view_grade','refresh');
 				}
 			}
 			else

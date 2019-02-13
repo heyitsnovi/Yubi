@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+//$2y$08$JQQug/dLO4KgTnVITVltBOnJUDcsRsCGZ2.XLblNBW5gN1GhetCGu
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
