@@ -36,6 +36,7 @@
 						    <tr>
 								<th>ID</th>
 								<th>Faculty Name</th>
+								<th>Assigned Level/Grade</th>
 								<th>Address</th>
 								<th>Email</th>
 								<th>Contact</th>
@@ -48,6 +49,7 @@
 						    <tr>
 								<td><?php echo $f['id']; ?></td>
 								<td><?php echo $f['first_name']; ?> <?php echo $f['middle_name']; ?> <?php echo $f['last_name']; ?></td>
+								<td> <?php    echo $this->enrollment_library->get_level_info_by_id($f['assigned_grade_level'],'name'); ?></td>
 								<td><?php echo $f['address']; ?></td>
 								<td><?php echo $f['email']; ?></td>
 								<td><?php echo $f['contact']; ?></td>

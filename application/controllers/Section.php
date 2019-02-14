@@ -12,6 +12,7 @@ class Section extends CI_Controller{
         $this->load->model('Level_model');
         $this->load->model('Faculty_model');
         $this->load->library('enrollment_library');
+          $this->load->model('Room_model');
     } 
 
     /*
@@ -32,6 +33,7 @@ class Section extends CI_Controller{
     {   
         $this->load->library('form_validation');
         $data['page_title'] = 'Add Section';
+        $data['rooms'] = $this->Room_model->get_all_rooms();
         $data['levels'] = $this->Level_model->get_all_levels();
         $data['vacant_teachers'] = $this->Section_model->get_vacant_teachers();
 		$this->form_validation->set_rules('name','Name','required|max_length[100]');
@@ -45,7 +47,17 @@ class Section extends CI_Controller{
 				'adviser' => $this->input->post('adviser'),
 				'name' => $this->input->post('name'),
             );
-            
+         
+
+            $params_rooms = array(
+                    
+                    'incharge' => $this->input->post('adviser'),
+                );
+
+                $this->Room_model->update_room($this->input->post('room_assinged'),$params_rooms);           
+
+                redirect('room/index');
+
             $section_id = $this->Section_model->add_section($params);
             redirect('section/index');
         }
@@ -65,6 +77,7 @@ class Section extends CI_Controller{
         $data['section'] = $this->Section_model->get_section($id);
         $data['levels'] = $this->Level_model->get_all_levels();
         $data['vacant_teachers'] = $this->Faculty_model->get_all_faculty();
+        $data['rooms'] = $this->Room_model->get_all_rooms();
         $data['page_title'] = 'Edit   Section';
         
         if(isset($data['section']['id']))
@@ -83,6 +96,15 @@ class Section extends CI_Controller{
 					'name' => $this->input->post('name'),
                 );
 
+
+            $params_rooms = array(
+                    
+                    'incharge' => $this->input->post('adviser'),
+                );
+
+                $this->Room_model->update_room($this->input->post('room_assinged'),$params_rooms);   
+
+                
                 $this->Section_model->update_section($id,$params);            
                 redirect('section/index');
             }

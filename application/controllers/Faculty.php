@@ -10,6 +10,7 @@ class Faculty extends CI_Controller{
         parent::__construct();
         $this->load->model('Faculty_model');
         $this->load->library('enrollment_library','ion_auth');
+         $this->load->model('Level_model');
 
     if (!$this->ion_auth->in_group(['admin', 'registrar']))
         {
@@ -34,7 +35,7 @@ class Faculty extends CI_Controller{
     function add()
     {   
         $this->load->library('form_validation');
-
+        $data['levels'] = $this->Level_model->get_all_levels();
 		$this->form_validation->set_rules('first_name','First Name','required|max_length[100]');
 		$this->form_validation->set_rules('middle_name','Middle Name','max_length[100]');
 		$this->form_validation->set_rules('last_name','Last Name','required|max_length[100]');
@@ -63,6 +64,7 @@ class Faculty extends CI_Controller{
 				'email' => $this->input->post('email'),
 				'contact' => $this->input->post('contact'),
 				'profile' => $this->input->post('profile'),
+                'assigned_grade_level'=>$this->input->post('subject_for')
             );
             
             $faculty_id = $this->Faculty_model->add_faculty($params);
@@ -100,6 +102,7 @@ class Faculty extends CI_Controller{
         // check if the faculty exists before trying to edit it
         $data['faculty'] = $this->Faculty_model->get_faculty($id);
         $data['page_title'] = 'Faculty / Staffs List - Edit';
+                $data['levels'] = $this->Level_model->get_all_levels();
           $data['faculty_usertbl_id'] = $this->Faculty_model->get_faculty_id_from_table_users($data['faculty']['email']);
         if(isset($data['faculty']['id']))
         {
@@ -138,6 +141,7 @@ class Faculty extends CI_Controller{
 					'email' => $this->input->post('email'),
 					'contact' => $this->input->post('contact'),
 					'profile' => $this->input->post('profile'),
+                    'assigned_grade_level'=>$this->input->post('subject_for')
                 );
 
                    if(strlen($this->input->post('password')) >0){

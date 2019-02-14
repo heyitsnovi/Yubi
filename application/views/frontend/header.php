@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-    <title>Academy - Education Course Template</title>
+    <title><?php echo $page_title; ?></title>
 
     <link rel="icon" href="img/core-img/favicon.ico">
 
@@ -34,7 +34,7 @@
                     <div class="col-12 h-100">
                         <div class="header-content h-100 d-flex align-items-center justify-content-between">
                             <div class="academy-logo">
-                                <a href="index-2.html"><img style="width: 80px;" src="<?php echo base_url('academy/img/core-img/logo.png');?>" alt=""></a>
+                                <a href="index-2.html"><img   src="<?php echo base_url('academy/img/core-img/logo.png');?>" alt=""></a>
                             </div>
                             <div class="login-content">
                                 <?php if(isset($_SESSION['identity'])):?>                                       
@@ -134,8 +134,8 @@
                 <div class="row h-100 align-items-center">
                     <div class="col-12">
                         <div class="hero-slides-content">
-                            <h4 data-animation="fadeInUp" data-delay="100ms">All the courses you need</h4>
-                            <h2 data-animation="fadeInUp" data-delay="400ms">Welcome to our <br>University of Bohol - Loon</h2>
+                            <h4 data-animation="fadeInUp" data-delay="100ms">K-12 Ready</h4>
+                            <h2 data-animation="fadeInUp" data-delay="400ms">Welcome to our <br>University of Bohol - Loon Institute</h2>
                             <a href="#" class="btn academy-btn" data-animation="fadeInUp" data-delay="700ms">Read More</a>
                         </div>
                     </div>

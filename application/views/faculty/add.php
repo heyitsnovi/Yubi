@@ -31,6 +31,19 @@
 						<?php echo form_open('faculty/add',array("class"=>"form-horizontal")); ?>
 
 
+						<div class="form-group">
+							<label for="subject_for" class="col-md-1  control-label"><span class="text-danger"></span>Assigned Grade/ Level</label>
+							<div class="col-md-8">
+								<select class="form-control" name="subject_for">
+									<option value="">-</option>
+									<?php foreach($levels as $lv):?>
+									<option value="<?php echo $lv['levels_id']; ?>"><?php echo $lv['name']; ?></option>
+									<?php endforeach;?>
+								</select>
+								<span class="text-danger"><?php echo form_error('subject_for');?></span>
+							</div>
+						</div>
+
 							<div class="form-group">
 								<label for="first_name" class="col-md-1  control-label"><span class="text-danger">*</span>First Name</label>
 								<div class="col-md-8">

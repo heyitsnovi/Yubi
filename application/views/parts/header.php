@@ -118,6 +118,11 @@
 					<li><a class="" href="<?php echo base_url('level');?>">
 						<span class="fa fa-arrow-right">&nbsp;</span> Levels
 					</a></li>
+
+					<li><a class="" href="<?php echo base_url('room');?>">
+						<span class="fa fa-arrow-right">&nbsp;</span> Rooms
+					</a></li>
+						
 					<li><a class="" href="<?php echo base_url('section'); ?>">
 						<span class="fa fa-arrow-right">&nbsp;</span> Sections
 					</a></li>

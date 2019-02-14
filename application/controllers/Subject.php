@@ -9,6 +9,8 @@ class Subject extends CI_Controller{
     {
         parent::__construct();
         $this->load->model('Subject_model');
+        $this->load->model('Level_model');
+        $this->load->library(['enrollment_library']);
     } 
 
     /*
@@ -29,9 +31,11 @@ class Subject extends CI_Controller{
     {   
         $this->load->library('form_validation');
         $data['page_title'] = 'Add New Subject';
+        $data['levels'] = $this->Level_model->get_all_levels();
 		$this->form_validation->set_rules('code','Code','required|max_length[100]');
 		$this->form_validation->set_rules('name','Name','required|max_length[100]');
-		$this->form_validation->set_rules('description','Description','required|max_length[100]');
+		$this->form_validation->set_rules('description','Description','required|max_length[1000]');
+        $this->form_validation->set_rules('subject_for', 'Subject Level', 'trim|required');
 		
 		if($this->form_validation->run())     
         {   
@@ -39,6 +43,7 @@ class Subject extends CI_Controller{
 				'code' => $this->input->post('code'),
 				'name' => $this->input->post('name'),
 				'description' => $this->input->post('description'),
+                'subject_lvl'=>$this->input->post('subject_for')
             );
             
             $subject_id = $this->Subject_model->add_subject($params);
@@ -58,14 +63,15 @@ class Subject extends CI_Controller{
     {   
         // check if the subject exists before trying to edit it
         $data['subject'] = $this->Subject_model->get_subject($id);
-        
+          $data['levels'] = $this->Level_model->get_all_levels();
         if(isset($data['subject']['id']))
         {
             $this->load->library('form_validation');
             $data['page_title'] = 'Edit Existing Subject';
 			$this->form_validation->set_rules('code','Code','required|max_length[100]');
 			$this->form_validation->set_rules('name','Name','required|max_length[100]');
-			$this->form_validation->set_rules('description','Description','required|max_length[100]');
+			$this->form_validation->set_rules('description','Description','required|max_length[1000]');
+            $this->form_validation->set_rules('subject_for', 'Subject Level', 'trim|required');
 		
 			if($this->form_validation->run())     
             {   
@@ -73,6 +79,7 @@ class Subject extends CI_Controller{
 					'code' => $this->input->post('code'),
 					'name' => $this->input->post('name'),
 					'description' => $this->input->post('description'),
+                    'subject_lvl'=>$this->input->post('subject_for')
                 );
 
                 $this->Subject_model->update_subject($id,$params);            

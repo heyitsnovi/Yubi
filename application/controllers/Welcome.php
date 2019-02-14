@@ -8,7 +8,7 @@ class Welcome extends CI_Controller {
 
 	public function index(){
 		
-		$data['page_title'] = 'Home - UB - LI';
+		$data['page_title'] = 'Home - University of Bohol - Loon Institute';
 		$this->load->view('frontend/header',$data);
 		$this->load->view('frontend/home',$data);
 		$this->load->view('frontend/footer',$data);

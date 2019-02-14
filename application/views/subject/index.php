@@ -30,6 +30,7 @@
 									    <tr>
 											<th>ID</th>
 											<th>Code</th>
+											<th>Grade Level</th>
 											<th>Name</th>
 											<th>Description</th>
 											<th>Actions</th>
@@ -40,6 +41,7 @@
 									    <tr>
 											<td><?php echo $s['id']; ?></td>
 											<td><?php echo $s['code']; ?></td>
+											<td><?php    echo $this->enrollment_library->get_level_info_by_id($s['subject_lvl'],'name'); ?></td>
 											<td><?php echo $s['name']; ?></td>
 											<td><?php echo $s['description']; ?></td>
 											<td>

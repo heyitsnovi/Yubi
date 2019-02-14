@@ -79,8 +79,25 @@
 									<span class="text-danger"><?php echo form_error('adviser');?></span>
 								</div>
 							</div>
+
+													<div class="form-group">
+							<label for="room_assinged" class="col-md-1 control-label"><span class="text-danger"></span>Designated  Room</label>
+							<div class="col-md-8">
+								 <select class="form-control room_assinged">
+								 	<option value="">-</option>
+							 <?php foreach($rooms as $r){ ?>
+						 
+							            <option value="<?php echo $r['id']; ?>"><?php  echo $r['name']; ?></option> 
+							  
+								<?php } ?>
+								 </select>
+								<span class="text-danger"><?php echo form_error('room_assinged');?></span>
+							</div>
+						</div>
+
+						
 							<div class="form-group">
-								<label for="name" class="col-md-1 control-label"><span class="text-danger">*</span>Name</label>
+								<label for="name" class="col-md-1 control-label"><span class="text-danger">*</span>Section Name</label>
 								<div class="col-md-8">
 									<input type="text" name="name" value="<?php echo ($this->input->post('name') ? $this->input->post('name') : $section['name']); ?>" class="form-control" id="name" />
 									<span class="text-danger"><?php echo form_error('name');?></span>
