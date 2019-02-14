@@ -32,3 +32,7 @@ Grading SHeet
 *must display the name of the teacher that is currently selected
 ->Input grades
 * display the subject name
+
+Add subject
+
+>Change Pop Up

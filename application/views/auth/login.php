@@ -9,9 +9,13 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-md-push-4">
+
+
         <div class="well" style="margin-top: 100px;">
-         <h1><?php echo lang('login_heading');?></h1>
- 
+          <div class="text-center">
+            <h1>User <?php echo lang('login_heading');?></h1>   
+          </div>
+        
 
           <div id="infoMessage" style="color:red;"><?php echo $message;?></div>
 
@@ -32,7 +36,8 @@
                  <?php echo lang('login_remember_label', 'remember');?>
             </div>
 
-            <p><?php echo form_submit('submit', lang('login_submit_btn'),['class'=>'btn btn-primary btn-block']);?></p>
+            <p><?php echo form_submit('submit', lang('login_submit_btn'),['class'=>'btn btn-primary btn-block btn-lg']);?></p>
+            <p><a href="<?php echo base_url('/'); ?>" class="btn btn-danger btn-lg btn-block"> Back To Home</a></p>
           <?php echo form_close();?>
           <p><a href="forgot_password"><?php echo lang('login_forgot_password');?></a></p> 
         </div>
